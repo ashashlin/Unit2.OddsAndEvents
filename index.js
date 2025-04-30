@@ -13,9 +13,12 @@ function createForm() {
     <label for="number">
       Add a number to the bank
     </label>
-    <input type="number" id="number" name="number" step="1" />
+    <input class="number-input" type="number" id="number" name="number" step="1" />
     <button class="btn add-number">
       Add number
+    </button>
+    <button class="btn generate-number" type="button">
+      Generate number
     </button>
     <button class="btn sort-one" type="button">
       Sort 1
@@ -28,6 +31,7 @@ function createForm() {
   addFormSubmitEventListener($form);
   addSortOneEventListener($form);
   addSortAllEventListener($form);
+  addGenerateNumberEventListener($form);
 
   return $form;
 }
@@ -86,6 +90,29 @@ function addSortAllEventListener($form) {
     numbers.length = 0;
 
     render();
+  });
+}
+
+// === add generate number event listener ===
+
+function addGenerateNumberEventListener($form) {
+  const generateNumber = $form.querySelector(".generate-number");
+  generateNumber.addEventListener("click", () => {
+    let randomNumber;
+    // creates a random positive number between 0 to 1000
+    const randomPositiveNumber = Math.floor(Math.random() * 1001);
+    // creates a random negative number between -1000 to 0
+    const randomNegativeNumber = Math.floor(Math.random() * 1001 - 1000);
+    const random = Math.random();
+
+    if (random < 0.5) {
+      randomNumber = randomNegativeNumber;
+    } else {
+      randomNumber = randomPositiveNumber;
+    }
+
+    const numberInput = $form.querySelector(".number-input");
+    numberInput.value = randomNumber;
   });
 }
 
