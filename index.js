@@ -17,10 +17,10 @@ function createForm() {
     <button class="btn add-number">
       Add number
     </button>
-    <button class="btn sort-1">
+    <button class="btn sort-one" type="button">
       Sort 1
     </button>
-    <button class="btn sort-all">
+    <button class="btn sort-all" type="button">
       Sort All
     </button>
   `;
@@ -33,9 +33,24 @@ function createForm() {
 
     if (Number.isNaN(number)) {
       alert("Please enter a number.");
+      return;
     }
 
     numbers.push(number);
+    render();
+  });
+
+  const $sortOne = $form.querySelector(".sort-one");
+  $sortOne.addEventListener("click", () => {
+    const firstNumber = numbers.shift();
+    if (firstNumber === undefined) return;
+
+    if (firstNumber % 2 === 0) {
+      evenNumbers.push(firstNumber);
+    } else {
+      oddNumbers.push(firstNumber);
+    }
+
     render();
   });
 
