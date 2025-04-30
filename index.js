@@ -87,8 +87,10 @@ function addSortOneEventListener($form) {
 
     if (firstNumber % 2 === 0) {
       evenNumbers.push(firstNumber);
+      evenNumbers.sort((a, b) => a - b);
     } else {
       oddNumbers.push(firstNumber);
+      oddNumbers.sort((a, b) => a - b);
     }
 
     render();
@@ -111,6 +113,8 @@ function addSortAllEventListener($form) {
     }
     numbers.length = 0;
 
+    evenNumbers.sort((a, b) => a - b);
+    oddNumbers.sort((a, b) => a - b);
     render();
   });
 }
@@ -164,11 +168,13 @@ function sortAnyNumberOfItems($form) {
   for (let i = 0; i < sortInputNumber; i++) {
     if (numbers[i] % 2 === 0) {
       evenNumbers.push(numbers[i]);
-    } else if (numbers[i] % 2 === 1) {
+    } else {
       oddNumbers.push(numbers[i]);
     }
   }
 
+  evenNumbers.sort((a, b) => a - b);
+  oddNumbers.sort((a, b) => a - b);
   numbers.splice(0, sortInputNumber);
   render();
 }
