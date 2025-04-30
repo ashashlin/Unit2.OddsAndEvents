@@ -13,7 +13,7 @@ function createForm() {
     <label for="number">
       Add a number to the bank
     </label>
-    <input class="number-input" type="number" id="number" name="number" step="1" />
+    <input class="number-input" type="text" id="number" name="number" step="1" />
     <button class="btn add-number">
       Add number
     </button>
@@ -43,14 +43,30 @@ function addFormSubmitEventListener($form) {
     e.preventDefault();
 
     const formData = new FormData($form);
-    const number = parseInt(formData.get("number"));
+    const inputValue = formData.get("number");
+    const inputArray = inputValue.split(",");
 
-    if (Number.isNaN(number)) {
-      alert("Please enter a number.");
-      return;
+    // first, check if inputs are all numbers
+    let areAllNumbers = false;
+    for (const string of inputArray) {
+      const number = parseInt(string);
+
+      if (Number.isNaN(number)) {
+        alert(
+          "Please enter an integer or a string of integers separated by a comma."
+        );
+        return;
+      }
+    }
+    areAllNumbers = true;
+
+    if (areAllNumbers) {
+      for (const string of inputArray) {
+        const number = parseInt(string);
+        numbers.push(number);
+      }
     }
 
-    numbers.push(number);
     render();
   });
 }
