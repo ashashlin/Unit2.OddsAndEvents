@@ -26,12 +26,17 @@ function createForm() {
     <button class="btn sort-all" type="button">
       Sort All
     </button>
+    <button class="btn sort-customize" type="button">
+      Sort:
+    </button>
+    <input class="sort-input" type="number" min="1" step="1" />
   `;
 
   addFormSubmitEventListener($form);
   addSortOneEventListener($form);
   addSortAllEventListener($form);
   addGenerateNumberEventListener($form);
+  addSortCustomizeEventListener($form);
 
   return $form;
 }
@@ -129,6 +134,37 @@ function addGenerateNumberEventListener($form) {
 
     const numberInput = $form.querySelector(".number-input");
     numberInput.value = randomNumber;
+  });
+}
+
+// === sort according to user input ===
+
+function addSortCustomizeEventListener($form) {
+  const sortCustomize = $form.querySelector(".sort-customize");
+  sortCustomize.addEventListener("click", () => {
+    const sortInput = $form.querySelector(".sort-input");
+    const sortInputNumber = parseInt(sortInput.value);
+
+    if (Number.isNaN(sortInputNumber)) {
+      alert("Please enter the number of items you want to sort at a time.");
+      return;
+    }
+
+    if (sortInputNumber > numbers.length) {
+      alert("Not enough items to sort.");
+      return;
+    }
+
+    for (let i = 0; i < sortInputNumber; i++) {
+      if (numbers[i] % 2 === 0) {
+        evenNumbers.push(numbers[i]);
+      } else if (numbers[i] % 2 === 1) {
+        oddNumbers.push(numbers[i]);
+      }
+    }
+
+    numbers.splice(0, sortInputNumber);
+    render();
   });
 }
 

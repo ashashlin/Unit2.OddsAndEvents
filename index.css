@@ -2,6 +2,10 @@
   cursor: pointer;
 }
 
+.sort-input {
+  width: 3rem;
+}
+
 .subtitle {
   text-transform: capitalize;
 }
