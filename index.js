@@ -22,6 +22,16 @@ function createForm() {
   return $form;
 }
 
+function createSubsection(sectionName) {
+  const $section = document.createElement("section");
+  $section.innerHTML = `
+    <h2 class="subtitle">${sectionName}</h2>
+    <div class="numbers-display ${sectionName}-display"></div>
+  `;
+
+  return $section;
+}
+
 // === render the page ===
 
 function render() {
@@ -30,6 +40,11 @@ function render() {
     <h1>Odds and Events</h1>
   `;
 
-  $app.append(createForm());
+  $app.append(
+    createForm(),
+    createSubsection("bank"),
+    createSubsection("odds"),
+    createSubsection("evens")
+  );
 }
 render();
