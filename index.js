@@ -25,6 +25,8 @@ function createForm() {
     </button>
   `;
 
+  // add form submit event listener
+
   $form.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -40,6 +42,8 @@ function createForm() {
     render();
   });
 
+  // add sort 1 button event listener
+
   const $sortOne = $form.querySelector(".sort-one");
   $sortOne.addEventListener("click", () => {
     const firstNumber = numbers.shift();
@@ -50,6 +54,24 @@ function createForm() {
     } else {
       oddNumbers.push(firstNumber);
     }
+
+    render();
+  });
+
+  // add sort all button event listener
+
+  const sortAll = $form.querySelector(".sort-all");
+  sortAll.addEventListener("click", () => {
+    if (numbers.length === 0) return;
+
+    for (const number of numbers) {
+      if (number % 2 === 0) {
+        evenNumbers.push(number);
+      } else {
+        oddNumbers.push(number);
+      }
+    }
+    numbers.length = 0;
 
     render();
   });
