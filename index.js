@@ -25,8 +25,16 @@ function createForm() {
     </button>
   `;
 
-  // add form submit event listener
+  addFormSubmitEventListener($form);
+  addSortOneEventListener($form);
+  addSortAllEventListener($form);
 
+  return $form;
+}
+
+// === add form submit event listener ===
+
+function addFormSubmitEventListener($form) {
   $form.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -41,9 +49,11 @@ function createForm() {
     numbers.push(number);
     render();
   });
+}
 
-  // add sort 1 button event listener
+// === add sort 1 button event listener ===
 
+function addSortOneEventListener($form) {
   const $sortOne = $form.querySelector(".sort-one");
   $sortOne.addEventListener("click", () => {
     const firstNumber = numbers.shift();
@@ -57,9 +67,11 @@ function createForm() {
 
     render();
   });
+}
 
-  // add sort all button event listener
+// === add sort all button event listener ===
 
+function addSortAllEventListener($form) {
   const sortAll = $form.querySelector(".sort-all");
   sortAll.addEventListener("click", () => {
     if (numbers.length === 0) return;
@@ -75,8 +87,6 @@ function createForm() {
 
     render();
   });
-
-  return $form;
 }
 
 // === create HTML for a single subsection ===
