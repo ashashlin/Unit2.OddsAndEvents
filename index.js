@@ -37,6 +37,7 @@ function createForm() {
   addSortAllEventListener($form);
   addGenerateNumberEventListener($form);
   addSortCustomizeEventListener($form);
+  addSortInputEventListener($form);
 
   return $form;
 }
@@ -142,29 +143,45 @@ function addGenerateNumberEventListener($form) {
 function addSortCustomizeEventListener($form) {
   const sortCustomize = $form.querySelector(".sort-customize");
   sortCustomize.addEventListener("click", () => {
-    const sortInput = $form.querySelector(".sort-input");
-    const sortInputNumber = parseInt(sortInput.value);
+    sortAnyNumberOfItems($form);
+  });
+}
 
-    if (Number.isNaN(sortInputNumber)) {
-      alert("Please enter the number of items you want to sort at a time.");
-      return;
+function sortAnyNumberOfItems($form) {
+  const sortInput = $form.querySelector(".sort-input");
+  const sortInputNumber = parseInt(sortInput.value);
+
+  if (Number.isNaN(sortInputNumber)) {
+    alert("Please enter the number of items you want to sort at a time.");
+    return;
+  }
+
+  if (sortInputNumber > numbers.length) {
+    alert("Not enough items to sort.");
+    return;
+  }
+
+  for (let i = 0; i < sortInputNumber; i++) {
+    if (numbers[i] % 2 === 0) {
+      evenNumbers.push(numbers[i]);
+    } else if (numbers[i] % 2 === 1) {
+      oddNumbers.push(numbers[i]);
     }
+  }
 
-    if (sortInputNumber > numbers.length) {
-      alert("Not enough items to sort.");
-      return;
+  numbers.splice(0, sortInputNumber);
+  render();
+}
+
+// === sort the numbers when the user presses Enter in the sort input ===
+
+function addSortInputEventListener($form) {
+  const sortInput = $form.querySelector(".sort-input");
+  sortInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      sortAnyNumberOfItems($form);
     }
-
-    for (let i = 0; i < sortInputNumber; i++) {
-      if (numbers[i] % 2 === 0) {
-        evenNumbers.push(numbers[i]);
-      } else if (numbers[i] % 2 === 1) {
-        oddNumbers.push(numbers[i]);
-      }
-    }
-
-    numbers.splice(0, sortInputNumber);
-    render();
   });
 }
 
