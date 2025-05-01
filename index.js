@@ -200,9 +200,27 @@ function createSubsection(sectionName) {
   const evensString = evenNumbers.join(" ");
 
   let displayContent = "";
+  let dropdownButtonHTML = `
+    <button class="btn sort-dropdown-btn">
+      <span class="sort-dropdown"></span>
+    </button>`;
+  let dropdownMenuHTML = `
+    <div class="sort-dropdown-menu">
+      <p class="sort-dropdown-menu-option sort-ascending"
+      data-section-name='${sectionName}'>
+        Sort in ascending order
+      </p>
+      <p class="sort-dropdown-menu-option sort-descending"
+      data-section-name='${sectionName}'>
+        Sort in descending order
+      </p>
+    </div>
+  `;
 
   if (sectionName === "bank") {
     displayContent = numbersString;
+    dropdownButtonHTML = "";
+    dropdownMenuHTML = "";
   } else if (sectionName === "odds") {
     displayContent = oddsString;
   } else if (sectionName === "evens") {
@@ -210,13 +228,62 @@ function createSubsection(sectionName) {
   }
 
   $section.innerHTML = `
-    <h2 class="subtitle">${sectionName}</h2>
+    <header class="subsection-header">
+      <h2 class="subtitle">${sectionName}</h2>
+      ${dropdownButtonHTML}
+      ${dropdownMenuHTML}
+    </header>
     <div class="numbers-display ${sectionName}-display">
       ${displayContent}
     </div>
   `;
 
+  addDropdownBtnEventListener($section);
+  addSortOrderEventListener($section, "ascending");
+  addSortOrderEventListener($section, "descending");
+
   return $section;
+}
+
+// === show the dropdown menu when user clicks the dropdown button ===
+
+function addDropdownBtnEventListener($section) {
+  const dropdownBtn = $section.querySelector(".sort-dropdown-btn");
+
+  if (dropdownBtn) {
+    dropdownBtn.addEventListener("click", () => {
+      const dropdownMenu = $section.querySelector(".sort-dropdown-menu");
+      dropdownMenu.classList.toggle("active");
+    });
+  }
+}
+
+// === add event listeners to ascending and descending sort options in the dropdown menu ===
+
+function addSortOrderEventListener($section, order) {
+  const sortOption = $section.querySelector(`.sort-${order}`);
+
+  if (sortOption) {
+    sortOption.addEventListener("click", () => {
+      const { sectionName } = sortOption.dataset;
+
+      if (sectionName === "odds") {
+        if (order === "ascending") {
+          oddNumbers.sort((a, b) => a - b);
+        } else {
+          oddNumbers.sort((a, b) => b - a);
+        }
+      } else if (sectionName === "evens") {
+        if (order === "ascending") {
+          evenNumbers.sort((a, b) => a - b);
+        } else {
+          evenNumbers.sort((a, b) => b - a);
+        }
+      }
+
+      render();
+    });
+  }
 }
 
 // === render the page ===

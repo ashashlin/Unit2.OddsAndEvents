@@ -1,9 +1,60 @@
+p {
+  margin: 0;
+}
+
 .btn {
   cursor: pointer;
 }
 
 .sort-input {
   width: 3rem;
+}
+
+.subsection-header {
+  position: relative;
+}
+
+.sort-dropdown-btn {
+  position: relative;
+  position: absolute;
+  top: 0.1rem;
+  left: 12rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.sort-dropdown {
+  position: absolute;
+  top: 13%;
+  left: 25%;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-top: 2px solid black;
+  border-left: 2px solid black;
+  transform: rotate(225deg);
+}
+
+.sort-dropdown-menu {
+  display: none;
+}
+
+.sort-dropdown-menu.active {
+  position: absolute;
+  top: 1.6rem;
+  left: 12rem;
+  z-index: 100;
+  display: block;
+  background-color: beige;
+}
+
+.sort-dropdown-menu-option {
+  padding: 1rem;
+  cursor: pointer;
+  transition: background-color 150ms;
+}
+
+.sort-dropdown-menu-option:hover {
+  background-color: lightgoldenrodyellow;
 }
 
 .subtitle {
